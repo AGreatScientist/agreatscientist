@@ -1,18 +1,24 @@
-const button = document.getElementById("message-button");
-const input = document.getElementById("message-input");
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-const sidebar = document.querySelector(".chat-sidebar");
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAwvEpYeExfGUmQgYKFVNGFcZJmzAeQaYk",
+  authDomain: "likecompot-chat.firebaseapp.com",
+  databaseURL: "https://likecompot-chat-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "likecompot-chat",
+  storageBucket: "likecompot-chat.appspot.com",
+  messagingSenderId: "873209489255",
+  appId: "1:873209489255:web:956219eb1d2f18e15371c2",
+  measurementId: "G-7ERZ3KJE4E"
+};
 
-let onlineMembersCount = 0;
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
-addEventListener("load", function(ev) {
-    onlineMembersCount++;
-
-    sidebar.innerText = `Онлайн: ${onlineMembersCount}/20`;
-});
-
-addEventListener("unload", function(ev) {
-    onlineMembersCount--;
-
-    sidebar.innerText = `Онлайн: ${onlineMembersCount}/20`;
-});
+console.log(analytics)
