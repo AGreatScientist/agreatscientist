@@ -30,7 +30,7 @@ function insertData(obj) {
     });
 }
 
-function selectData() {
+function selectData(obj) {
     const dbref = ref(db);
 
     get(child(dbref, `Clicks/${obj}`)).then((snapshot) => {
@@ -45,7 +45,7 @@ function selectData() {
     });
 }
 
-function updateData() {
+function updateData(obj) {
     update(ref(db, `Clicks/${obj}`), {
         obj: obj++
     })
@@ -57,7 +57,7 @@ function updateData() {
     });
 }
 
-function deleteData() {
+function deleteData(obj) {
     remove(ref(db, `Clicks/${obj}`))
     .then(() => {
         alert("data removed successfully");
