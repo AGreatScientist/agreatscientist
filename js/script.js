@@ -1,13 +1,18 @@
-import { insertData, selectData, updateData, deleteData } from "js/methods.js";
-
-
-const button = document.getElementById("test");
+const button = document.getElementById("message-button");
 const input = document.getElementById("message-input");
 
-let counter = null;
+const sidebar = document.querySelector(".chat-sidebar");
 
-button.addEventListener("click", insertData)
+let onlineMembersCount = 0;
 
-button.addEventListener("click", (ev)=>{
-    button.innerText = `Clicks: ${counter}`;
-})
+addEventListener("load", function(ev) {
+    onlineMembersCount++;
+
+    sidebar.innerText = `Онлайн: ${onlineMembersCount}/20`;
+});
+
+addEventListener("unload", function(ev) {
+    onlineMembersCount--;
+
+    sidebar.innerText = `Онлайн: ${onlineMembersCount}/20`;
+});
