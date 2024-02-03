@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 {
   "dependencies": {
     "firebase-admin": "^12.0.0"
   }
 }
+=======
+{
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  }
+}
+>>>>>>> aefdf9e758c5bac7775506ee8d29b4b3aaf45adc
