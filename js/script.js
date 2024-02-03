@@ -3,20 +3,17 @@ const messageSendButton = document.getElementById("message-send-button");
 const messageInput = document.getElementById("message-input");
 const chatSession = document.getElementsByClassName("chat-session")[0];
 
-//const { db } = require("firebase.js");
-//const { insertData } = require("methods.js")
+const { saveMessage } = require("./firebase");
 
-
-let username = localStorage.getItem("username");
-if (!username) {
-    username = prompt("Ваше имя:\nВам придется вводить имя только один раз.\n(Не нажимайте кнопку 'Отмена', пожалуйста.)");
-    while (username == "null" || !username.trim().length) username = prompt("Недопустимое значение. Введите корректное имя.");
-    localStorage.setItem("username", username);
+var username = localStorage.getItem("username")
+if (!username) username = prompt("Введите своё имя.\nЭто сообщение больше не появится.")
+while (!username || !username.trim().length || username === "null" || username === "undefined") {
+    username = prompt("Введено некорректное значение.\nВведите своё имя.");
 }
+localStorage.setItem("username", username.trim());
 
-let onlineMembersCount = 0;
-let messages = [];
-
+var onlineMembersCount = 0;
+var messages = [];
 
 messageSendButton.addEventListener("click", function (ev) {
     let input = messageInput;
@@ -33,16 +30,15 @@ messageSendButton.addEventListener("click", function (ev) {
 
     console.log(messages);
     chatSession.innerText += `\n\n\n${messages[messages.length - 1]}`;
+    saveMessage(input.value, username, 1);
 });
 
-addEventListener("load", function (ev) {
+window.addEventListener("load", function (ev) {
     onlineMembersCount++;
-
-    chatSession.innerHTML = `There are ${onlineMembersCount} people online!`;
+    chatSession.innerHTML = `<p>There are ${onlineMembersCount} people online!</p>`;
 });
 
-addEventListener("unload", function (ev) {
+window.addEventListener("beforeunload", function (ev) {
     onlineMembersCount--;
-
-    chatSession.innerHTML = `There are ${onlineMembersCount} people online!`;
+    chatSession.innerHTML = `<p>There are ${onlineMembersCount} people online!</p>`
 })
