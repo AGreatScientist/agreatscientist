@@ -1,12 +1,12 @@
-const { initializeApp, cert } = require("firebase-admin");
-const { getFirestore } = require("firebase-admin/firestore");
+const { db, save, get, update, remove } = require("./methods");
 
-const serviceAccount = require("./creds.json");
+function saveMessage(content, author, messageID) {
+    let data = {
+        content: content,
+        author: author,
+        messageID: messageID
+    };
+    update(data);
+};
 
-initializeApp({
-    credential: cert(serviceAccount)
-});
-
-const db = getFirestore();
-
-module.exports = { db }
+module.exports = { saveMessage };

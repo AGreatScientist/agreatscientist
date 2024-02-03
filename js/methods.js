@@ -1,68 +1,48 @@
-import { getDatabase, initializeApp, ref, set, child, update, remove }
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+var admin = require("firebase-admin");
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAwvEpYeExfGUmQgYKFVNGFcZJmzAeQaYk",
-    authDomain: "likecompot-chat.firebaseapp.com",
-    databaseURL: "https://likecompot-chat-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "likecompot-chat",
-    storageBucket: "likecompot-chat.appspot.com",
-    messagingSenderId: "873209489255",
-    appId: "1:873209489255:web:956219eb1d2f18e15371c2",
-    measurementId: "G-7ERZ3KJE4E"
-  };
-  
-  // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getDatabase();
+    apiKey: "AIzaSyCy4KzPMDsrPodjcDJ6MWURBVFSQk5dRvs",
+    authDomain: "likecompot-chatt.firebaseapp.com",
+    databaseURL: "https://likecompot-chatt-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "likecompot-chatt",
+    storageBucket: "likecompot-chatt.appspot.com",
+    messagingSenderId: "587237363934",
+    appId: "1:587237363934:web:4094a12aa1632c226ef24f",
+    measurementId: "G-JP4PRR7KNM"
+};
 
-console.log(app);
+admin.initializeApp(firebaseConfig);
 
-function insertData(obj) {
-    set(ref(db, `Clicks/${obj}`), {
-        obj: obj++
-    })
-    .then(() => {
-        alert("data stored successfully");
-    })
-    .catch((error) => {
-        alert("error: " + error)
+const db = admin.database();
+
+function save(path) {
+    db.ref(path).set({
+        content: data.content,
+        author: data.author,
+        messageID: data.messageID
     });
-}
+};
 
-function selectData(obj) {
-    const dbref = ref(db);
+function get(path) {
+    const userRef = ref(path);
+    userRef.on("value", function (snapshot) {
+        let val = snapshot.val()
+        return val;
+    })
+};
 
-    get(child(dbref, `Clicks/${obj}`)).then((snapshot) => {
-        if (snapshot.exist()) {
-            return snapshot;
-        } else {
-            alert("try again");
-        }
-    })
-    .catch((error) => {
-        alert("error: " + error);
-    });
-}
+function update(data, path) {
+    let updates = {
+        content: data.content,
+        author: data.author,
+        messageID: data.messageID,
+    };
+    let result = db.ref(path).update(updates)
+    return result;
+};
 
-function updateData(obj) {
-    update(ref(db, `Clicks/${obj}`), {
-        obj: obj++
-    })
-    .then(() => {
-        alert("data stored successfully");
-    })
-    .catch((error) => {
-        alert("error: " + error)
-    });
-}
+function remove(path) {
+    db.ref(path).remove()
+};
 
-function deleteData(obj) {
-    remove(ref(db, `Clicks/${obj}`))
-    .then(() => {
-        alert("data removed successfully");
-    })
-    .catch((error) => {
-        alert("error: " + error)
-    });
-}
+module.exports = { db, save, get, update, remove };
