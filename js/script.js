@@ -3,7 +3,7 @@ const messageSendButton = document.getElementById("message-send-button");
 const messageInput = document.getElementById("message-input");
 const chatSession = document.getElementsByClassName("chat-session")[0];
 
-const { saveMessage } = require("./firebase");
+import { saveMessage } from "./firebase";
 
 var username = localStorage.getItem("username")
 if (!username) username = prompt("Введите своё имя.\nЭто сообщение больше не появится.")
