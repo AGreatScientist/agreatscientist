@@ -6,7 +6,7 @@ function saveMessage(content, author, messageID) {
         author: author,
         messageID: messageID
     };
-    update(data);
+    update(data, `/messages${messageID}`);
 };
 
 module.exports = { saveMessage };
